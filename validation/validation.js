@@ -24,13 +24,11 @@ const bookSchema = Joi.object({
 const updateBookSchema = bookSchema.fork(['title', 'author', 'isbn', 'publishedYear'], (field) =>
   field.optional()
 );
-
 exports.validateBook = (req, res, next) => {
   const { error } = bookSchema.validate(req.body);
   if (error) return res.status(400).json({ status: 'error', message: error.details[0].message });
   next();
 };
-
 exports.validateBookUpdate = (req, res, next) => {
   const { error } = updateBookSchema.validate(req.body);
   if (error) return res.status(400).json({ status: 'error', message: error.details[0].message });
